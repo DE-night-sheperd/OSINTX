@@ -40,46 +40,53 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4 relative overflow-hidden">
+      {/* Tactical Background Elements */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-white/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-white/5 rounded-full blur-[120px]" />
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
+      </div>
+
       {/* Branding Header */}
-      <div className="mb-8 text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-600 text-white mb-4 shadow-lg shadow-blue-200">
-          <Shield size={32} />
+      <div className="mb-12 text-center relative z-10 animate-in fade-in slide-in-from-top-4 duration-700">
+        <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-white/5 border border-white/10 text-white mb-6 shadow-2xl shadow-white/5 group hover:border-white/30 transition-all duration-500">
+          <Shield size={40} className="group-hover:scale-110 transition-transform duration-500" />
         </div>
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
-          SECURE<span className="text-blue-600">TRUST</span>
+        <h1 className="text-5xl font-black text-white tracking-tighter uppercase mb-2">
+          MASSIVE<span className="text-white/40">OSINTX</span>
         </h1>
-        <p className="text-slate-500 mt-2 font-medium">
-          Official Government Security Portal
+        <p className="text-white/40 text-xs font-bold uppercase tracking-[0.3em] mb-6">
+          Tactical Intelligence & Forensic Suite
         </p>
-        <div className="flex items-center justify-center gap-2 mt-2 text-xs text-green-600 font-semibold bg-green-50 px-3 py-1 rounded-full border border-green-100 uppercase tracking-wider">
+        <div className="flex items-center justify-center gap-2 text-[10px] text-white font-black bg-white/5 px-4 py-1.5 rounded-full border border-white/10 uppercase tracking-widest animate-pulse">
           <CheckCircle2 size={12} />
-          Verified Secure Environment
+          Uplink Status: Secure Mesh Active
         </div>
       </div>
 
       {/* Login Card */}
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200 overflow-hidden">
-        <div className="p-8">
-          <div className="mb-8">
-            <h2 className="text-xl font-semibold text-slate-800">Agency Login</h2>
-            <p className="text-sm text-slate-500 mt-1">
-              Authorized personnel from registered security companies only.
+      <div className="w-full max-w-md bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden relative z-10 shadow-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000">
+        <div className="p-10">
+          <div className="mb-10">
+            <h2 className="text-2xl font-black text-white uppercase tracking-tight">Operator Authentication</h2>
+            <p className="text-xs text-white/40 mt-2 font-bold uppercase tracking-wider">
+              Enter credentials to establish tactical uplink.
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl relative" role="alert">
+              <div className="bg-red-500/10 border border-red-500/50 text-red-500 px-4 py-3 rounded-xl text-xs font-black uppercase tracking-widest animate-shake" role="alert">
                 <span className="block sm:inline">{error}</span>
               </div>
             )}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700 ml-1">
+            <div className="space-y-3">
+              <label className="text-[10px] font-black text-white/40 uppercase tracking-widest ml-1">
                 Security ID / Agency Code
               </label>
               <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-500 transition-colors">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-white/20 group-focus-within:text-white transition-colors">
                   <User size={18} />
                 </div>
                 <input
@@ -88,17 +95,17 @@ export default function LoginPage() {
                   placeholder="SA-SEC-XXXXX"
                   value={securityId}
                   onChange={(e) => setSecurityId(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  className="block w-full pl-12 pr-4 py-4 bg-black/40 border border-white/10 rounded-2xl text-white placeholder:text-white/10 focus:outline-none focus:ring-2 focus:ring-white/10 focus:border-white/30 transition-all font-mono text-sm"
                 />
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700 ml-1">
+            <div className="space-y-3">
+              <label className="text-[10px] font-black text-white/40 uppercase tracking-widest ml-1">
                 Security Password
               </label>
               <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-500 transition-colors">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-white/20 group-focus-within:text-white transition-colors">
                   <Lock size={18} />
                 </div>
                 <input
@@ -107,7 +114,7 @@ export default function LoginPage() {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  className="block w-full pl-12 pr-4 py-4 bg-black/40 border border-white/10 rounded-2xl text-white placeholder:text-white/10 focus:outline-none focus:ring-2 focus:ring-white/10 focus:border-white/30 transition-all font-mono text-sm"
                 />
               </div>
             </div>
@@ -115,29 +122,30 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className={`w-full py-3.5 px-4 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-slate-200 ${isLoading ? "opacity-80 cursor-not-allowed" : ""}`}
+              className={`w-full py-5 px-4 bg-white hover:bg-white/90 text-black font-black uppercase tracking-[0.2em] text-xs rounded-2xl transition-all flex items-center justify-center gap-3 shadow-xl shadow-white/5 active:scale-[0.98] ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
             >
               {isLoading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
               ) : (
                 <>
-                  Authenticate Access
+                  Establish Access
+                  <Zap size={16} />
                 </>
               )}
             </button>
           </form>
         </div>
 
-        <div className="px-8 py-4 bg-slate-50 border-t border-slate-100 text-center">
-          <p className="text-xs text-slate-400">
-            Unauthorized access is strictly prohibited under the Cybercrimes Act of South Africa.
+        <div className="px-10 py-6 bg-white/5 border-t border-white/10 text-center">
+          <p className="text-[9px] text-white/20 font-bold uppercase leading-relaxed tracking-widest">
+            Unauthorized access is strictly prohibited under the Cybercrimes Act of South Africa. Node tracking is active.
           </p>
         </div>
       </div>
 
-      <footer className="mt-12 text-center text-slate-400 text-sm">
+      <footer className="mt-16 text-center text-white/20 text-[10px] font-bold uppercase tracking-[0.3em] relative z-10">
         <p>© 2026 South African Department of Security. All rights reserved.</p>
-        <p className="mt-1">Project Massive: Security & Trust Hackathon</p>
+        <p className="mt-2 text-white/10">Project Massive: Tactical Intelligence Mesh v1.0.4</p>
       </footer>
     </div>
   );

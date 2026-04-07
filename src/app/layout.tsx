@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SECURETRUST | Official Government Security Portal",
-  description: "Advanced tactical intelligence and cybersecurity innovation tool.",
+  title: "MASSIVE OSINTX | Tactical Intelligence Suite",
+  description: "Advanced tactical intelligence and forensic platform.",
 };
 
 export default function RootLayout({
