@@ -11,10 +11,13 @@ This project is not "just TypeScript." It follows a professional **Hybrid Archit
     -   Manages API routing, user authentication, and real-time UI updates.
     -   Acts as the "Control Center" that communicates with specialized intelligence nodes.
 
-2.  **Intelligence & Tactical Layer (Python)**:
-    -   Uses industry-standard libraries like `phonenumbers`, `holehe`, and `scapy`.
-    -   Performs the actual "real-life" work: scanning networks, searching social platforms, and interrogating telecom databases.
-    -   These scripts reside in the `/scripts/` directory and are executed by the Orchestration Layer.
+2.  **Intelligence & Tactical Layer (Multi-Lang Nodes)**:
+    -   **Python**: Industry-standard for OSINT (`phonenumbers`, `holehe`).
+    -   **Go**: High-performance concurrent networking and port scanning.
+    -   **Rust**: Memory-safe, low-level data processing and forensics.
+    -   **C++**: Native performance for heavy computational/cryptographic tasks.
+    -   **PowerShell**: Deep system-level interrogation for Windows environments.
+    -   These nodes reside in the `/scripts/` directory and are orchestrated by the Control Center.
 
 ## 🚀 Real-World Features (Implemented)
 
@@ -32,7 +35,11 @@ This project is not "just TypeScript." It follows a professional **Hybrid Archit
 ## 📡 Lab Commands
 
 In the Dashboard Lab, try these real-world commands:
-- `osint-phone [number]`
-- `osint-email [email]`
-- `recon-net`
-- `ping [host]`
+- `osint-phone [number]` - Real phone intelligence (Python)
+- `osint-email [email]` - Social platform email search (Python)
+- `recon-net` - Actual local network scan (Python)
+- `go-scan [target]` - High-speed concurrent scan (Go)
+- `rust-analyze [data]` - Memory-safe forensic analysis (Rust)
+- `cpp-analyze [data]` - High-performance native analysis (C++)
+- `sys-forensics` - Deep system-level interrogation (PowerShell)
+- `ping [host]` - Real ICMP ping from server

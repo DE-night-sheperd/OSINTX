@@ -240,7 +240,7 @@ export default function Dashboard() {
     const args = parts.slice(1);
 
     // List of commands that should hit the REAL backend
-    const realCommands = ["osint-phone", "osint-email", "recon-net", "ping", "whois"];
+    const realCommands = ["osint-phone", "osint-email", "recon-net", "ping", "whois", "go-scan", "rust-analyze", "cpp-analyze", "sys-forensics"];
 
     if (realCommands.includes(baseCmd)) {
       setLabLogs(prev => [...prev, { id: Math.random().toString(), msg: "EXECUTING REMOTE SIGNAL UPLINK...", type: "system" }]);
@@ -295,7 +295,16 @@ export default function Dashboard() {
           break;
         case "help":
           response = [
-            { msg: "Available Forensic Tools:", type: "system" },
+            { msg: "Available REAL-WORLD Tools:", type: "system" },
+            { msg: "  osint-phone [number] - Real phone intelligence (Python)", type: "success" },
+            { msg: "  osint-email [email]  - Social platform email search (Python)", type: "success" },
+            { msg: "  recon-net            - Actual local network scan (Python)", type: "success" },
+            { msg: "  go-scan [target]     - High-speed concurrent scan (Go)", type: "success" },
+            { msg: "  rust-analyze [data]  - Memory-safe forensic analysis (Rust)", type: "success" },
+            { msg: "  cpp-analyze [data]   - High-performance native analysis (C++)", type: "success" },
+            { msg: "  sys-forensics [targ] - Deep system-level interrogation (PowerShell)", type: "success" },
+            { msg: "  ping [host]          - Real ICMP ping from server", type: "success" },
+            { msg: "Legacy/Mock Forensic Tools:", type: "system" },
             { msg: "  pkg install [tool] - Install hacking modules", type: "output" },
             { msg: "  git clone [url]    - Clone tools from GitHub", type: "output" },
             { msg: "  nano [file.py]     - Create/Edit custom scripts", type: "output" },
