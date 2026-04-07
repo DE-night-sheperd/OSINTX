@@ -49,6 +49,7 @@ import { useRouter } from "next/navigation";
 // Extended interface for Advanced Forensic, OSINT & Intelligence Data
 interface ForensicRecord extends DeviceRecord {
   id: string;
+  imsi: string;
   signalDb: number;
   networkNode: string;
   biometricSync: boolean;
@@ -504,12 +505,23 @@ export default function Dashboard() {
         return {
            id: "DEMO-USER-001",
            phoneNumber: phone,
+           lastSeen: new Date().toISOString(),
+           status: "online",
+           deviceName: "Samsung Galaxy S24 Ultra",
+           phoneModel: "SM-S928B",
+           simSerial: "8927101122334455",
            carrier: "Telkom Mobile",
            imei: "350001537768927",
            imsi: "655019928374655",
            networkNode: "ZA-NC-KIM-NODE-01",
            biometricSync: true,
            signalDb: -64,
+           socialMediaStatus: {
+              platform: "WhatsApp",
+              lastActive: "Now",
+              status: "Active",
+              lastActivityLocation: "Labram"
+           },
            identity: {
               fullName: "MASHEGO EXCELLENT",
               idNumber: "0205125149080",
@@ -732,12 +744,23 @@ export default function Dashboard() {
      return {
        id: hash.toString(),
        phoneNumber: phone,
+       lastSeen: new Date().toISOString(),
+       status: hash % 4 === 0 ? "offline" : "online",
+       deviceName: device.name,
+       phoneModel: device.model,
+       simSerial: `8927${(hash % 999999999999).toString().padStart(12, "0")}`,
        carrier: carrier,
        imei: `35${(hash % 9999999999999).toString().padStart(13, "0")}`,
        imsi: `655${(hash % 99999999999).toString().padStart(12, "0")}`,
        networkNode: `ZA-GP-CELL-${hash % 999}`,
        biometricSync: hash % 2 === 0,
        signalDb: -(hash % 40 + 60),
+       socialMediaStatus: {
+         platform: (["WhatsApp", "Facebook", "Instagram", "Twitter"][hash % 4]) as any,
+         lastActive: "2h ago",
+         status: "Active on primary node",
+         lastActivityLocation: locBase.city
+       },
        identity: {
          fullName: finalFullName,
          idNumber: `${(hash % 90 + 10).toString()}${(hash % 12 + 1).toString().padStart(2, "0")}${(hash % 28 + 1).toString().padStart(2, "0")}${(hash % 9999 + 1000).toString()}08${hash % 9}`,
@@ -810,6 +833,18 @@ export default function Dashboard() {
              color: ["White", "Silver", "Black", "Amber"][hash % 4],
              confidence: (hash % 10) + 89.4
            } : null,
+         },
+         tacticalIntel: {
+            hatZone: (["WHITE", "BLUE", "RED", "BLACK"][hash % 4]) as any,
+            threatLevel: (["LOW", "ELEVATED", "CRITICAL", "EXTREME"][hash % 4]) as any,
+            manhuntStatus: (["STANDBY", "ACTIVE_PURSUIT", "TARGET_ACQUIRED", "SIGNAL_LOST"][hash % 4]) as any,
+            towerProximity: {
+               distanceMeters: hash % 2000 + 100,
+               closestTowerId: `TWR-ZA-${hash % 999}`,
+               sectorId: `SEC-${hash % 99}`,
+               triangulationConfidence: (hash % 20) + 75
+            },
+            activeHacks: ["SS7 Intercept", "HLR Interrogation"]
          },
          networkAgent: {
             agentId: `AGENT-${hash % 9999}`,
