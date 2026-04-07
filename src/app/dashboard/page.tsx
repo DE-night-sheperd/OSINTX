@@ -226,18 +226,42 @@ export default function Dashboard() {
     setLogs(prev => [...prev, newLog]);
   };
 
-  const handleLabCommand = (e: React.FormEvent) => {
+  const handleLabCommand = async (e: React.FormEvent) => {
     e.preventDefault();
-    const cmd = labInput.trim().toLowerCase();
-    if (!cmd) return;
+    const cmdInput = labInput.trim();
+    if (!cmdInput) return;
 
     const newLogs = [...labLogs, { id: Math.random().toString(), msg: `$ ${labInput}`, type: "input" as const }];
     setLabLogs(newLogs);
     setLabInput("");
 
-    const parts = cmd.split(" ");
-    const baseCmd = parts[0];
+    const parts = cmdInput.split(" ");
+    const baseCmd = parts[0].toLowerCase();
     const args = parts.slice(1);
+
+    // List of commands that should hit the REAL backend
+    const realCommands = ["osint-phone", "osint-email", "recon-net", "ping", "whois"];
+
+    if (realCommands.includes(baseCmd)) {
+      setLabLogs(prev => [...prev, { id: Math.random().toString(), msg: "EXECUTING REMOTE SIGNAL UPLINK...", type: "system" }]);
+      try {
+        const response = await fetch('/api/lab/exec', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ command: baseCmd, args })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          setLabLogs(prev => [...prev, { id: Math.random().toString(), msg: data.output, type: data.type || "output" }]);
+        } else {
+          setLabLogs(prev => [...prev, { id: Math.random().toString(), msg: `Error: ${data.error}`, type: "error" }]);
+        }
+      } catch (err) {
+        setLabLogs(prev => [...prev, { id: Math.random().toString(), msg: "SIGNAL INTERRUPTED: Backend unreachable.", type: "error" }]);
+      }
+      return;
+    }
 
     setTimeout(async () => {
       let response: { msg: string; type: "output" | "error" | "success" | "system" }[] = [];

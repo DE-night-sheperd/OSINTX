@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Massive OSINTX - Tactical Intelligence Suite
 
-## Getting Started
+Massive OSINTX is a full-stack tactical intelligence and forensic platform. It uses a hybrid architecture to combine high-performance UI orchestration with real-world OSINT tools.
 
-First, run the development server:
+## 🛡️ Architecture: The Hybrid Approach
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This project is not "just TypeScript." It follows a professional **Hybrid Architecture**:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1.  **Orchestration Layer (TypeScript/Next.js)**:
+    -   Handles the high-speed, secure, and beautiful dashboard.
+    -   Manages API routing, user authentication, and real-time UI updates.
+    -   Acts as the "Control Center" that communicates with specialized intelligence nodes.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2.  **Intelligence & Tactical Layer (Python)**:
+    -   Uses industry-standard libraries like `phonenumbers`, `holehe`, and `scapy`.
+    -   Performs the actual "real-life" work: scanning networks, searching social platforms, and interrogating telecom databases.
+    -   These scripts reside in the `/scripts/` directory and are executed by the Orchestration Layer.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Real-World Features (Implemented)
 
-## Learn More
+-   **Real Phone OSINT**: Uses the `phonenumbers` library to fetch actual carrier, location, and timezone data (not mocked).
+-   **Email Interrogation**: Uses `holehe` to check email existence across hundreds of social platforms (Twitter, Instagram, LinkedIn, etc.).
+-   **Network Reconnaissance**: Uses real system commands (`arp -a`) to discover devices on your actual local network.
+-   **Tactical Lab**: A functional terminal that can execute real Python scripts and system commands.
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ Setup
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1.  **Node.js**: `npm install`
+2.  **Python 3.12+**: `pip install -r requirements.txt`
+3.  **Run**: `npm run dev`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📡 Lab Commands
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+In the Dashboard Lab, try these real-world commands:
+- `osint-phone [number]`
+- `osint-email [email]`
+- `recon-net`
+- `ping [host]`

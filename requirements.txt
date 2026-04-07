@@ -1,0 +1,5 @@
+phonenumbers
+axios
+holehe
+scapy
+requests
