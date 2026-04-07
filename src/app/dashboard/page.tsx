@@ -48,9 +48,8 @@ import { useRouter } from "next/navigation";
 
 // Extended interface for Advanced Forensic, OSINT & Intelligence Data
 interface ForensicRecord extends DeviceRecord {
+  id: string;
   signalDb: number;
-  imei: string;
-  imsi: string;
   networkNode: string;
   biometricSync: boolean;
   digitalFootprint: {
@@ -65,6 +64,12 @@ interface ForensicRecord extends DeviceRecord {
     subjectCaptureUrl: string;
     clothingIntel: string;
     facialMatchScore: number;
+  };
+  identity: {
+    fullName: string;
+    idNumber: string;
+    riskScore: number;
+    status: string;
   };
   identityIndex?: {
     callerId: string;
@@ -277,7 +282,7 @@ export default function Dashboard() {
               { msg: "ESTABLISHING STEALTH UPLINK...", type: "output" },
               { msg: "UPLINK ESTABLISHED via ZA-KIM-NODE-01", type: "success" },
               { msg: "IDENTIFYING NETWORK TOPOLOGY...", type: "output" },
-              { msg: "TARGET IS BEHIND LAN GATEWAY (192.168.1.1)", type: "warning" },
+              { msg: "TARGET IS BEHIND LAN GATEWAY (192.168.1.1)", type: "error" },
               { msg: "STARTING PROTOCOL STRIPPING LAYER 2-7...", type: "output" },
               { msg: "[STRIP] ARP: OK (MAC: 00:1A:2B:3C:4D:5E)", type: "success" },
               { msg: "[STRIP] ICMP: OK (TTL: 64)", type: "success" },
@@ -324,8 +329,8 @@ export default function Dashboard() {
               { msg: "Intelligence Uplink Status:", type: "system" },
               { msg: `  Twilio SID:   ${twilioCreds.sid ? "CONFIGURED" : "MISSING"}`, type: twilioCreds.sid ? "success" : "error" },
               { msg: `  Abstract API: ${osintKeys.abstract ? "CONFIGURED" : "MISSING"}`, type: osintKeys.abstract ? "success" : "error" },
-              { msg: "NOTE: System is currently in HYBRID_SANDBOX mode.", type: "info" },
-              { msg: "Real data is reconstructed via Internal Signal Logic when tokens are missing.", type: "info" }
+              { msg: "NOTE: System is currently in HYBRID_SANDBOX mode.", type: "system" },
+              { msg: "Real data is reconstructed via Internal Signal Logic when tokens are missing.", type: "system" }
             ];
           } else {
             response = [{ msg: "Usage: config --tokens", type: "error" }];
@@ -339,7 +344,7 @@ export default function Dashboard() {
              response = [
                 { msg: `TACTICAL_INJECT: Real-world identity forced for node ${cleanNum}`, type: "success" },
                 { msg: `Identity set to: ${name}`, type: "output" },
-                { msg: "Neural mapping updated. Use INTERCEPTOR to scan.", type: "info" }
+                { msg: "Neural mapping updated. Use INTERCEPTOR to scan.", type: "system" }
              ];
           } else {
              response = [
@@ -830,7 +835,9 @@ export default function Dashboard() {
             localIp: `192.168.${hash % 255}.${hash % 254 + 1}`,
             publicIp: `${(hash % 200) + 41}.${(hash % 255)}.${(hash % 255)}.${(hash % 255)}`,
             gateway: `192.168.${hash % 255}.1`,
-            dns: ["8.8.8.8", "1.1.1.1"]
+            dns: ["8.8.8.8", "1.1.1.1"],
+            connectivity: (["Wireless (802.11ax)", "Ethernet (RJ45/CAT6)", "Cellular (5G/LTE)"][hash % 3]) as "Wireless (802.11ax)" | "Ethernet (RJ45/CAT6)" | "Cellular (5G/LTE)",
+            uplinkSpeed: `${(hash % 900) + 100} Mbps`
          },
        };
      };
@@ -2331,7 +2338,7 @@ export default function Dashboard() {
                             <div className="flex items-center gap-3">
                                <MapPin size={16} className="text-white" />
                                <div>
-                                  <p className="text-[10px] font-black text-white">{liveResult.location.suburb}, {liveResult.location.city}</p>
+                                  <p className="text-[10px] font-black text-white">{liveResult.location.suburb || "Primary Cell"}, {liveResult.location.city}</p>
                                   <p className="text-[8px] font-bold text-white/40 uppercase tracking-tighter">{liveResult.location.address}</p>
                                </div>
                             </div>
@@ -2393,18 +2400,27 @@ export default function Dashboard() {
             </div>
           )}
 
-          {activeView === "osint" && <OsintDashboard />}
-          {activeView === "map" && <NetworkMapDashboard />}
-          {activeView === "lab" && <ForensicLabDashboard />}
+          {activeView === "osint" && <OsintDashboard liveResult={liveResult} eqHeights={eqHeights} />}
+          {activeView === "map" && <NetworkMapDashboard targetGeolocation={targetGeolocation} />}
+          {activeView === "lab" && (
+            <ForensicLabDashboard 
+              labLogs={labLogs}
+              installedTools={installedTools}
+              labInput={labInput}
+              setLabInput={setLabInput}
+              setLabLogs={setLabLogs}
+              handleLabCommand={handleLabCommand}
+              labScrollRef={labScrollRef}
+              editingFile={editingFile}
+              setEditingFile={setEditingFile}
+              editingContent={editingContent}
+              setEditingContent={setEditingContent}
+              setInstalledTools={setInstalledTools}
+              setCustomScripts={setCustomScripts}
+            />
+          )}
         </div>
       </main>
-      
-      <style jsx global>{`
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-        @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .animate-spin-slow { animation: spin-slow 12s linear infinite; }
-      `}</style>
     </div>
   );
 }

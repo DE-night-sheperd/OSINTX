@@ -6,6 +6,7 @@ export interface DeviceRecord {
     lng: number;
     address: string;
     city: string;
+    suburb?: string;
   };
   status: "online" | "offline";
   deviceName: string;
